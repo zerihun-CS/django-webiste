@@ -396,77 +396,77 @@ I
 
 <script>
 // Extract data from table
-var table = document.getElementById("datatables-audits");
-var data = [];
-for (var i = 1; i < table.rows.length; i++) {
-  var row = table.rows[i];
-  var criterion = row.cells[0].innerText;
-  var project = row.cells[1].innerText;
-  var auditor = row.cells[2].innerText;
-  var date = row.cells[3].innerText;
-  data.push({ criterion, project, auditor, date });
-}
-
-// Group data by project and criterion
-var groups = {};
-data.forEach(function (item) {
-  if (!groups[item.project]) {
-    groups[item.project] = {};
-  }
-  if (!groups[item.project][item.criterion]) {
-    groups[item.project][item.criterion] = 0;
-  }
-  groups[item.project][item.criterion]++;
-});
-
-// Prepare data for chart
-var seriesData = [];
-Object.keys(groups).forEach(function (project) {
-  var data = [];
-  Object.keys(groups[project]).forEach(function (criterion) {
-    data.push(groups[project][criterion]);
-  });
-  seriesData.push({ name: project, data: data });
-});
-
-// Create chart
-Highcharts.chart("stacked-bar-chart", {
-  chart: {
-    type: "bar"
-  },
-  title: {
-    text: "Audits by Project and Criterion"
-  },
-  xAxis: {
-    categories: Object.keys(groups)
-  },
-  yAxis: {
-    title: {
-      text: "Number of Audits"
+    var table = document.getElementById("datatables-audits");
+    var data = [];
+    for (var i = 1; i < table.rows.length; i++) {
+      var row = table.rows[i];
+      var criterion = row.cells[0].innerText;
+      var project = row.cells[1].innerText;
+      var auditor = row.cells[2].innerText;
+      var date = row.cells[3].innerText;
+      data.push({ criterion, project, auditor, date });
     }
-  },
-  legend: {
-    reversed: true
-  },
-  plotOptions: {
-    series: {
-      stacking: "normal"
-    }
-  },
-  series: seriesData
-});
+
+    // Group data by project and criterion
+    var groups = {};
+    data.forEach(function (item) {
+      if (!groups[item.project]) {
+        groups[item.project] = {};
+      }
+      if (!groups[item.project][item.criterion]) {
+        groups[item.project][item.criterion] = 0;
+      }
+      groups[item.project][item.criterion]++;
+    });
+
+    // Prepare data for chart
+    var seriesData = [];
+    Object.keys(groups).forEach(function (project) {
+      var data = [];
+      Object.keys(groups[project]).forEach(function (criterion) {
+        data.push(groups[project][criterion]);
+      });
+      seriesData.push({ name: project, data: data });
+    });
+
+    // Create chart
+    Highcharts.chart("stacked-bar-chart", {
+      chart: {
+        type: "bar"
+      },
+      title: {
+        text: "Audits by Project and Criterion"
+      },
+      xAxis: {
+        categories: Object.keys(groups)
+      },
+      yAxis: {
+        title: {
+          text: "Number of Audits"
+        }
+      },
+      legend: {
+        reversed: true
+      },
+      plotOptions: {
+        series: {
+          stacking: "normal"
+        }
+      },
+      series: seriesData
+    });
 
 </script>
 
-    <script>
+<script>
 
 
 
-    
-        document.addEventListener("DOMContentLoaded", function() {
-            $(".select2").each(function() {
-                $(this)
-                    .wrap("<div class=\"position-relative\"></div>")
+        
+            document.addEventListener("DOMContentLoaded", function() {
+                $(".select2").each(function() {
+                    $(this)
+                        .wrap("<div class=\"position-relative\"></div>")
                     .select2({
                         placeholder: "Projects",
                         dropdownParent: $(this).parent()
@@ -489,7 +489,7 @@ Highcharts.chart("stacked-bar-chart", {
         });
     
    
-    </script>
+</script>
 
 
          

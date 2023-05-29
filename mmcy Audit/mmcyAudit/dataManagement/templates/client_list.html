@@ -28,7 +28,7 @@
 						<h1 class="header-title">
 							Clients
 						</h1>
-						{{interval_client}}
+						{% include 'message.html' %}
 					</div>
 					<div class="row">
 						<div class="col-xxl-12">
@@ -55,36 +55,40 @@
 								<div class="card-body">
 									<div class="mb-3">
 									
-										<a href="{% url 'client_create_url' %}" class="btn btn-primary">Add New Clients</a>
+										<a href="{% url 'client_create_url' %}" class="btn btn-primary"><i class="far fa-ion-md-person"></i> Add New Clients</a>
+										<a class="btn mb-1 btn-secondary" href="{% url 'get_clients_url' %}" ><i class="fas fa-globe-americas"></i> Sync From Interval</a>
+
+									</div>
+
+									<div class="mb-3">
+									
+									
 									</div>
 									<table id="datatables-clients" class="table table-striped" style="width:100%">
 										<thead>
 											<tr>
 												<th>#</th>
 												<th>Name</th>
-											
-												<th>MMCY contact</th>
-												<th>Onenote_link</th>
-                                    <th>Resource model
-                                    <th>Status</th>
-                                    <th>Actions</th>
+												<th>Date Created</th>
+												
+												<th>Status</th>
+												<th>Actions</th>
+										
 											</tr>
 										</thead>
 										<tbody>
-											{% for field in object_list %}
+											{% for client in object_list %}
 											<tr>
 												<td>{{forloop.counter}}</td>
-												<td>{{field.name}}</td>
-									
-												<td>{{field.mmcy_contact}}</td>
-												<td>{{field.onenote_link}}</td>
-												<td>{{field.resource_model}}</td>
-											
-												<td><span class="badge bg-success">{{field.status}}</span></td>
+												<td>{{ client.name }}</td>
+												<td>{{ client.datecreated }}</td>
+										
+												<td><span class="badge bg-success">{{client.active}}</span></td>
+
 												<td class="table-action">
-													<a href="{% url 'client_update_url' field.id %}"><i class="align-middle fas fa-fw fa-pen"></i></i></a>
-													<a href="{% url 'client_delete_url' field.id %}"><i class="align-middle fas fa-fw fa-trash"></i></a>
-													<a href="{% url 'client_detail_url' field.id %}"><i class="align-middle fas fa-fw fa-eye"></i></a>
+													<a href="{% url 'client_update_url' client.id %}"><i class="align-middle fas fa-fw fa-pen"></i></i></a>
+													<a href="{% url 'client_delete_url' client.id %}"><i class="align-middle fas fa-fw fa-trash"></i></a>
+													<a href="{% url 'client_detail_url' client.id %}"><i class="align-middle fas fa-fw fa-eye"></i></a>
 												</td>
 												{% endfor %}
 										</tbody>

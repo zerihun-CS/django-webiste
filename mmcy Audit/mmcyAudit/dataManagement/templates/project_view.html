@@ -4,7 +4,7 @@
 <html lang="en">
 
 
-<!-- Mirrored from spark.bootlab.io/pages-clients.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 12 Nov 2022 20:32:12 GMT -->
+
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 
 
@@ -58,88 +58,88 @@
 									<div class="col-xxl-12">
 										<div class="card">
 											<div class="card-header">
-												<div class="card-actions float-end">
-													<a href="#" class="me-1">
-														<i class="align-middle" data-feather="refresh-cw"></i>
-													</a>
-													<div class="d-inline-block dropdown show">
-														<a href="#" data-bs-toggle="dropdown" data-bs-display="static">
-															<i class="align-middle" data-feather="more-vertical"></i>
-														</a>
-			
-														<div class="dropdown-menu dropdown-menu-end">
-															<a class="dropdown-item" href="#">Action</a>
-															<a class="dropdown-item" href="#">Another action</a>
-															<a class="dropdown-item" href="#">Something else here</a>
-														</div>
-													</div>
-												</div>
-												
+											
+												<a class="btn mb-1 btn-secondary" href="{% url 'get_projects_team_url' object.pid %}" ><i class="fas fa-globe-americas"></i> Sync Project Team Interval</a>
 											</div>
 											<div class="card-body">
 												<div class="row g-0">
 													<div class="col-sm-12 col-xl-6 col-xxl-7 text-center">
 														<table class="table table-sm my-2">
 															<tbody>
-																<tr>
-																	<th>Project Title</th>
-																	<td>{{object.project_title}}</td>
-																</tr>
-																<tr>
-																	<th>Members</th>
-																<td>
-																	{% for single  in object.members.all  %}
-
-																	<span class="badge bg-primary">{{single}} </span>
-																	
-																	{% endfor %}
-																	
-																</tr>
-																<tr>
-																	<th>Client</th>
-																	<td>{{object.client}}</td>
-																</tr>
-																<tr>
-																	<th>Estimation</th>
-																	<td>{{object.estimation}}</td>
-																</tr>
-		
-																<tr>
-																	<th>Total Hour</th>
-																	<td>{{object.total_hour}}</td>
-																</tr>
-		
-															
-		
-																<tr>
-																	<th>Start Date</th>
-																	<td>{{object.start_date}}</td>
-																</tr>
-		
-																<tr>
-																	<th>Launch Date</th>
-																	<td>{{object.launch_date}}</td>
-																</tr>
-		
-																<tr>
-																	<th>First Draft Date</th>
-																	<td>{{object.first_draft_date}}</td>
-																</tr>
-		
-																<tr>
-																	<th>Status</th>
-																	<td><span class="badge bg-success">{{object.status}}</span></td>
-																</tr>
-		
-		
-																<tr class="table-action">
-																	<h5>Actions</h5>
-																	<a href="{% url 'project_update_url' object.id %}"><i class="align-middle fas fa-fw fa-pen"></i></i></a>
-																	<a href="{% url 'project_delete_url' object.id %}"><i class="align-middle fas fa-fw fa-trash"></i></a>
-																	
-																</tr>
+																 <tr>
+																	  <th>Project Title</th>
+																	  <td>{{ object.project_title }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Members</th>
+																	  <td>
+																			{% for single in object.members.all %}
+																				 <span class="badge bg-primary">{{ single }}</span>
+																			{% endfor %}
+																	  </td>
+																 </tr>
+																 <tr>
+																	  <th>Client</th>
+																	  <td>{{ object.client }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Description</th>
+																	  <td>{{ object.description }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Start Date</th>
+																	  <td>{{ object.date_start }}</td>
+																 </tr>
+																 <tr>
+																	  <th>End Date</th>
+																	  <td>{{ object.date_end }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Alert Date</th>
+																	  <td>{{ object.alert_date }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Status</th>
+																	  <td>
+																			{% if object.status %}
+																				 <span class="badge bg-success">Active</span>
+																			{% else %}
+																				 <span class="badge bg-danger">Inactive</span>
+																			{% endif %}
+																	  </td>
+																 </tr>
+																 <tr>
+																	  <th>Billable</th>
+																	  <td>
+																			{% if object.billable %}
+																				 Yes
+																			{% else %}
+																				 No
+																			{% endif %}
+																	  </td>
+																 </tr>
+																 <tr>
+																	  <th>Budget</th>
+																	  <td>{{ object.budget }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Manager</th>
+																	  <td>{{ object.manager }}</td>
+																 </tr>
+																 <tr class="table-action">
+																	  <td colspan="2">
+																			<h5>Actions</h5>
+																			<a href="{% url 'project_update_url' object.id %}">
+																				 <i class="align-middle fas fa-fw fa-pen"></i>
+																			</a>
+																			<a href="{% url 'project_delete_url' object.id %}">
+																				 <i class="align-middle fas fa-fw fa-trash"></i>
+																			</a>
+																	  </td>
+																 </tr>
 															</tbody>
-														</table>
+													  </table>
+													  
 													</div>
 													<div class="col-sm-12 col-xl-6 col-xxl-5">
 														<img src="{% static 'img/project.svg' %}" width="364" height="364"  alt="Angelica Ramos">

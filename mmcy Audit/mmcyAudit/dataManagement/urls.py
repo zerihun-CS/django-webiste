@@ -17,4 +17,9 @@ urlpatterns = [
       path('project-update/<int:pk>', ProjectUpdateView.as_view(),name='project_update_url'),
       path('project-delete/<int:pk>', ProjectDeleteView.as_view(),name='project_delete_url'),
       path('project-detail/<int:pk>', ProjectDetailView.as_view(),name='project_detail_url'),
+      
+      path('get_clients/', get_clients, name='get_clients_url'),
+      path('get_projects/', get_projects, name='get_projects_url'),
+      path('get_projects_team/<int:project_id>/', get_projects_team, name='get_projects_team_url'),
+      
 ]          

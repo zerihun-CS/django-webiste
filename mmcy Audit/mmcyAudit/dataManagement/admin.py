@@ -30,4 +30,4 @@ for model in post_models:
 #     model_admin.list_editable = model.admin_list_editable if hasattr(model, 'admin_list_editable') else ()
 #     model_admin.search_fields = model.admin_search_fields if hasattr(model, 'admin_search_fields') else ()
 
-#     admin.site.register(model, model_admin)
+

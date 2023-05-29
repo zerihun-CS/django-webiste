@@ -51,67 +51,108 @@
 								<div class="card-body">
 									
 									<h5>Create New Client</h5>
-    <form method="post">
-        {% csrf_token %}
-        
-		  <div class="mb-3 error-placeholder">
-			<label class="form-label">{{form.name.label}}</label>
+   
+									<form method="post">
+										{% csrf_token %}
+										
+										<div class="mb-3 error-placeholder">
+										 <label class="form-label">{{form.name.label}}</label>
+							 
+										 {% render_field form.name class+="form-control" placeholder="Client Name" %}
+										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+										 <small class="form-text d-block text-muted">insert clients name</small>
+									 </div>
+							 
+									 <div class="mb-3 error-placeholder">
+										 <label class="form-label">{{form.id_cvent.label}}</label>
+							 
+										 {% render_field form.id_cvent class+="form-control" placeholder="ID Cvent" %}
+										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+										 <small class="form-text d-block text-muted">insert clients ID Cvent</small>
+									 </div>
+							 
+									 <div class="mb-3 error-placeholder">
+										 <label class="form-label">{{form.datecreated.label}}</label>
+							 
+										 {% render_field form.datecreated class+="form-control" placeholder="Date Created" %}
+										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+										 <small class="form-text d-block text-muted">insert clients Date Created</small>
+									 </div>
+							 
+									 <div class="mb-3 error-placeholder">
+										 <label class="form-label">{{form.email.label}}</label>
+							 
+										 {% render_field form.email class+="form-control" placeholder="Email" %}
+										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+										 <small class="form-text d-block text-muted">insert clients Email</small>
+									 </div>
+							 
+									 <div class="mb-3 error-placeholder">
+										 <label class="form-label">{{form.website.label}}</label>
+							 
+										 {% render_field form.website class+="form-control" placeholder="Website" %}
+										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+										 <small class="form-text d-block text-muted">insert clients Website</small>
+									 </div>
+							 
+									 <div class="mb-3 error-placeholder">
+										 <label class="form-label">{{form.phone.label}}</label>
+							 
+										 {% render_field form.phone class+="form-control" placeholder="Phone" %}
+										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+										 <small class="form-text d-block text-muted">insert clients Phone</small>
+									 </div>
+							 
+									 <div class="mb-3 error-placeholder">
+										 <label class="form-label">{{form.fax.label}}</label>
+							 
+										 {% render_field form.fax class+="form-control" placeholder="Fax" %}
+										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+										 <small class="form-text d-block text-muted">insert clients Fax</small>
+									 </div>
+							 
+									 <div class="mb-3 error-placeholder">
+										 <label class="form-label">{{form.address.label}}</label>
+							 
+										 {% render_field form.address class+="form-control" placeholder="Address" %}
+										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+										 <small class="form-text d-block text-muted">insert clients
 
-			{% render_field form.name class+="form-control" placeholder="Client Name" %}
-			{% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-			<small class="form-text d-block text-muted">insert clients name</small>
-		</div>
-
-		<div class="mb-3 error-placeholder">
-			<label class="form-label">{{form.status.label}}</label>
-
-			{% render_field form.status class+="form-control" placeholder="Type of client" %}
-			{% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-			<small class="form-text d-block text-muted">Insert the Status Client</small>
-		</div>
-
-		<div class="mb-3 error-placeholder">
-			<label class="form-label">{{form.mmcy_contact.label}}</label>
-
-			{% render_field form.mmcy_contact class+="form-control" placeholder="Clients Active Project" %}
-			{% comment %} <input type="text" class="fsorm-control" name="validation-email" placeholder="Email"> {% endcomment %}
-			<small class="form-text d-block text-muted">Contact person for the client </small> 
-		</div>
-
-		<div class="mb-3 error-placeholder">
-			<label class="form-label">{{form.onenote_link.label}}</label>
-
-			{% render_field form.onenote_link class+="form-control" placeholder="Hour Billable" %}
-			{% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-			<small class="form-text d-block text-muted">insert clients onenote_link</small>
-		</div>
-
-		<div class="mb-3 error-placeholder">
-			<label class="form-label">{{form.resource_model.label}}</label>
-
-			{% render_field form.resource_model class+="form-control" placeholder="Hour Unbillable" %}
-			{% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-			<small class="form-text d-block text-muted">insert clients Resource model</small>
-		</div>
-
-		<div class="mb-3 error-placeholder">
-			<label class="form-label">{{form.additional_description.label}}</label>
-
-			{% render_field form.additional_description class+="form-control" placeholder="Hour Unbillable" %}
-			{% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-			<small class="form-text d-block text-muted">insert clients additional_description</small>
-		</div>
-
-
-		
-
-
-
-        <a type="button" class="btn btn-danger" href="{%url 'client_list_url' %}">Cancel</a>
-        <button type="submit" class="btn btn-success">Create</button>
-    </form>
-
-
+											Address</small>
+										</div>
+								
+										<div class="mb-3 error-placeholder">
+											<label class="form-label">{{form.active.label}}</label>
+								
+											{% render_field form.active class+="form-control" placeholder="Active" %}
+											{% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+											<small class="form-text d-block text-muted">insert clients Active</small>
+										</div>
+								
+										<div class="mb-3 error-placeholder">
+											<label class="form-label">{{form.localidunpadded.label}}</label>
+								
+											{% render_field form.localidunpadded class+="form-control" placeholder="Local ID Unpadded" %}
+											{% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+											<small class="form-text d-block text-muted">insert clients Local ID Unpadded</small>
+										</div>
+								
+										<div class="mb-3 error-placeholder">
+											<label class="form-label">{{form.localid.label}}</label>
+								
+											{% render_field form.localid class+="form-control" placeholder="Local ID" %}
+											{% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
+											<small class="form-text d-block text-muted">insert clients Local ID</small>
+										</div>
+								
+								
+										
+								
+								
+								
+										  <a type="button" class="btn btn-danger" href="{%url 'client_list_url' %}">Cancel</a>
+										  <button type="submit" class="btn btn-success">Create</button>
+									 </form>
 	
 
 

@@ -53,62 +53,46 @@
 								<div class="card-body">
 									<div class="mb-3">
 									
-										<a href="{% url 'project_create_url' %}" class="btn btn-primary">Add New Projects</a>
+										<a href="{% url 'project_create_url' %}" class="btn btn-primary"><i class="fas fa-pencil"></i> Add New Projects</a>
+										<a class="btn mb-1 btn-secondary" href="{% url 'get_projects_url' %}" ><i class="fas fa-globe-americas"></i> Sync From Interval</a>
 									</div>
 									<table id="datatables-clients" class="table table-striped" style="width:100%">
 										<thead>
 											<tr>
 												<th>#</th>
 												<th>Project Title</th>
-												<th>members</th>
+											
 												<th>Client</th>
-												<th>Estimation</th>
-                                    <th>Total Hour</th>
+									
 												<th>Start Date</th>
-												<th>Launch Date</th>
-												<th>First Draft Date</th>
+										
 												<th>Status</th>
 												<th>Actions</th>
-                        
-                                          
-											</tr>
+										  </tr>
 										</thead>
 										<tbody>
-											{% for field in object_list %}
-											<tr>
-												<td>{{forloop.counter}}</td>
-												<td>{{field.project_title}}</td>
-												<td>
-													{% for single  in field.members.all  %}
+										
+											{% for project in object_list %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{project.project_title}}</td>
+               
+                <td>{{project.client}}</td>
+      
+                <td>{{project.date_start}}</td>
 
-													<span class="badge bg-primary">{{single}} </span>
-													
-													{% endfor %}
-													
-
-													
-												</td>
-												<td>{{field.client}}</td>
-												<td>{{field.estimation}}</td>
-												<td>{{field.total_hour}}</td>
-												<td>{{field.start_date}}</td>
-												<td>{{field.launch_date}}</td>
-												<td>{{field.first_draft_date}}</td>
-												<td>
-													{% if field.status == True  %}
-													<span class="badge bg-success">Active</span>
-													{% else %}
-													<span class="badge bg-danger">Deactive</span>
-													{% endif %}
-												
-												</td>
-											
-												 <td class="table-action">
-													<a href="{% url 'project_update_url' field.id %}"><i class="align-middle fas fa-fw fa-pen"></i></i></a>
-													 <a href="{% url 'project_delete_url' field.id %}"><i class="align-middle fas fa-fw fa-trash"></i></a>
-													<a href="{% url 'project_detail_url' field.id %}"><i class="align-middle fas fa-fw fa-eye"></i></a> 
-												</td>
-												{% endfor %}
+					 {% if project.status == True  %}
+					 
+					 {% else %}
+					 {% endif %}
+                <td>{{project.status}}</td>
+                <td class="table-action">
+                    <a href="{% url 'project_update_url' project.id %}"><i class="align-middle fas fa-fw fa-pen"></i></a>
+                    <a href="{% url 'project_delete_url' project.id %}"><i class="align-middle fas fa-fw fa-trash"></i></a>
+                    <a href="{% url 'project_detail_url' project.id %}"><i class="align-middle fas fa-fw fa-eye"></i></a> 
+                </td>
+            </tr>
+        {% endfor %}
 										</tbody>
 									</table>
 								</div>

@@ -53,112 +53,75 @@
 								<div class="card-body">
 									
 									<h5>Create New Project</h5>
-   
 									<form method="post">
 										{% csrf_token %}
 										
 										<div class="mb-3 error-placeholder">
-										 <label class="form-label">{{form.project_title.label}}</label>
-							 
-										 {% render_field form.project_title class+="form-control" placeholder="Client Name" %}
-										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-										 <small class="form-text d-block text-muted">insert Project name</small>
-									 </div>
-							 
-									 <div class="mb-3 error-placeholder">
-										 <label class="form-label">{{form.members.label}}</label>
-							 
-										 {% render_field form.members class+="form-control select2" placeholder="Type of client" data-bs-toggle="select2"  %}
-							 
-										 {% comment %} <div class="mb-3">
-											 <select class="form-control select2" data-bs-toggle="select2" multiple>
-												 <optgroup label="Alaskan/Hawaiian Time Zone">
-													 <option value="AK">Alaska</option>
-													 <option value="HI">Hawaii</option>
-												 </optgroup>
-												 <optgroup label="Pacific Time Zone">
-													 <option value="CA">California</option>
-													 <option value="NV">Nevada</option>
-													 <option value="OR">Oregon</option>
-													 <option value="WA">Washington</option>
-												 </optgroup>
-											 
-											 
-												 
-											 </select>
-										 </div> {% endcomment %}
-							 
-							 
-										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-										 <small class="form-text d-block text-muted">Insert the Status Client</small>
-									 </div>
-							 
-									 <div class="mb-3 error-placeholder">
-										 <label class="form-label">{{form.client.label}}</label>
-							 
-										 {% render_field form.client class+="form-control" placeholder="Clients Active Project" %}
-										 {% comment %} <input type="text" class="fsorm-control" name="validation-email" placeholder="Email"> {% endcomment %}
-										 <small class="form-text d-block text-muted">Contact person for the client </small> 
-									 </div>
-							 
-									 <div class="mb-3 error-placeholder">
-										 <label class="form-label">{{form.estimation.label}}</label>
-							 
-										 {% render_field form.estimation class+="form-control" placeholder="Hour Billable" %}
-										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-										 <small class="form-text d-block text-muted">insert clients onenote_link</small>
-									 </div>
-							 
-									 <div class="mb-3 error-placeholder">
-										 <label class="form-label">{{form.total_hour.label}}</label>
-							 
-										 {% render_field form.total_hour class+="form-control" placeholder="Hour Unbillable" %}
-										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-										 <small class="form-text d-block text-muted">insert clients Resource model</small>
-									 </div>
-							 
-									 <div class="mb-3 error-placeholder">
-										 <label class="form-label">{{form.start_date.label}}</label>
-							 
-										 {% render_field form.start_date class+="form-control" type="date" placeholder="Hour Unbillable" %}
-										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-										 <small class="form-text d-block text-muted">insert clients additional_description</small>
-									 </div>
-							 
-							 
-									 
-							 
-									 <div class="mb-3 error-placeholder">
-										 <label class="form-label">{{form.launch_date.label}}</label>
-							 
-										 {% render_field form.launch_date class+="form-control" type="date" placeholder="Hour Unbillable" %}
-										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-										 <small class="form-text d-block text-muted">insert clients additional_description</small>
-									 </div>
-							 
-									 
-									 <div class="mb-3 error-placeholder">
-										 <label class="form-label">{{form.first_draft_date.label}}</label>
-							 
-										 {% render_field form.first_draft_date class+="form-control" type="date" placeholder="Hour Unbillable" %}
-										 {% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-										 <small class="form-text d-block text-muted">insert clients additional_description</small>
-									 </div>
-							 
-							 
-									 <div class="mb-3 error-placeholder">
-			
-										<label class="form-label">{{form.status.label}}</label>
-							
-										{% render_field form.status type="checkbox" class+="form-check-input" placeholder="Hour Unbillable" %}
-										{% comment %} <input type="text" class="form-control" name="validation-email" placeholder="Email"> {% endcomment %}
-										<small class="form-text d-block text-muted">insert clients additional_description</small>
-									</div>
-									 
-							 
-							 
-									
-							 
+											 <label class="form-label">{{ form.project_title.label }}</label>
+											 {% render_field form.project_title class+="form-control" placeholder="Project Title" %}
+											 <small class="form-text d-block text-muted">Insert project title</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.members.label }}</label>
+											 {% render_field form.members class+="form-control select2" placeholder="Members" data-bs-toggle="select2" %}
+											 <small class="form-text d-block text-muted">Select members</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.client.label }}</label>
+											 {% render_field form.client class+="form-control" placeholder="Client" %}
+											 <small class="form-text d-block text-muted">Insert client name</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.description.label }}</label>
+											 {% render_field form.description class+="form-control" placeholder="Description" %}
+											 <small class="form-text d-block text-muted">Insert project description</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.date_start.label }}</label>
+											 {% render_field form.date_start class+="form-control" type="date" %}
+											 <small class="form-text d-block text-muted">Insert start date</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.date_end.label }}</label>
+											 {% render_field form.date_end class+="form-control" type="date" %}
+											 <small class="form-text d-block text-muted">Insert end date</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.alert_date.label }}</label>
+											 {% render_field form.alert_date class+="form-control" type="date" %}
+											 <small class="form-text d-block text-muted">Insert alert date</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.status.label }}</label>
+											 {% render_field form.status class+="form-check-input" %}
+											 <small class="form-text d-block text-muted">Check if active</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.billable.label }}</label>
+											 {% render_field form.billable class+="form-check-input" %}
+											 <small class="form-text d-block text-muted">Check if billable</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.budget.label }}</label>
+											 {% render_field form.budget class+="form-control" placeholder="Budget" %}
+											 <small class="form-text d-block text-muted">Insert project budget</small>
+										</div>
+								  
+										<div class="mb-3 error-placeholder">
+											 <label class="form-label">{{ form.manager.label }}</label>
+											 {% render_field form.manager class+="form-control" placeholder="Manager" %}
+											 <small class="form-text d-block text-muted">Insert project manager</small>
+										</div>
+								  
 							 
 										<a type="button" class="btn btn-danger" href="{%url 'project_list_url' %}">Cancel</a>
 										<button type="submit" class="btn btn-success">Create</button>

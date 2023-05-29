@@ -56,7 +56,7 @@
 								</div>
 								<div class="card-body">
 									
-						
+									{% include 'message.html' %}
 									<div class="col-xxl-12 ">
 										<div class="card">
 											<div class="card-header">
@@ -76,41 +76,61 @@
 														</div>
 													</div>
 												</div>
-												<h3 class="card-title mb-0">{{object.name}}</h3>
+												<h1 class="card-title mb-0">{{object.name}}</h1>
 											</div>
 											<div class="card-body">
 												<div class="row g-0">
 													<div class="col-sm-12 col-xl-6 col-xxl-7 text-center my-5">
 														<table class="table table-sm my-2">
 															<tbody>
-																<tr>
-																	<th>Name</th>
-																	<td>{{object.name}}</td>
-																</tr>
-																<tr>
-																	<th>mmcy_contact</th>
-																<td>{{object.mmcy_contact}}</td>
-																</tr>
-																<tr>
-																	<th>onenote_link</th>
-																	<td>{{object.onenote_link}}</td>
-																</tr>
-																<tr>
-																	<th>resource_model</th>
-																	<td>{{object.resource_model}}</td>
-																</tr>
-															
-																	<th>Status</th>
-																	<td><span class="badge bg-success">{{object.status}}</span></td>
-																</tr>
-		
-																<tr class="table-action">
-																	<a href="{% url 'client_update_url' object.id %}"><i class="align-middle fas fa-fw fa-pen"></i></i></a>
-																	<a href="{% url 'client_delete_url' object.id %}"><i class="align-middle fas fa-fw fa-trash"></i></a>
-																	
-																</tr>
+																 <tr>
+																	  <th>Name</th>
+																	  <td>{{ object.name }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Date Created</th>
+																	  <td>{{ object.datecreated }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Email</th>
+																	  <td>{{ object.email }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Website</th>
+																	  <td>{{ object.website }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Phone</th>
+																	  <td>{{ object.phone }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Fax</th>
+																	  <td>{{ object.fax }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Address</th>
+																	  <td>{{ object.address }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Active</th>
+																	  <td>{{ object.active }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Local ID (Unpadded)</th>
+																	  <td>{{ object.localidunpadded }}</td>
+																 </tr>
+																 <tr>
+																	  <th>Local ID</th>
+																	  <td>{{ object.localid }}</td>
+																 </tr>
+																 <tr class="table-action">
+																	  <td colspan="2">
+																			<a href="{% url 'client_update_url' object.id %}"><i class="align-middle fas fa-fw fa-pen"></i></a>
+																			<a href="{% url 'client_delete_url' object.id %}"><i class="align-middle fas fa-fw fa-trash"></i></a>
+																	  </td>
+																 </tr>
 															</tbody>
-														</table>
+													  </table>
 													</div>
 													<div class="col-sm-12 col-xl-6 col-xxl-5">
 														<img src="{% static 'img/client.svg' %}" width="364" height="364"  alt="Angelica Ramos">

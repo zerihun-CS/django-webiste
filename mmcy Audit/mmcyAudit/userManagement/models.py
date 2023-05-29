@@ -3,6 +3,9 @@ from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 
 
+from django.utils.html import format_html
+from django.urls import reverse_lazy
+
 class Account(AbstractUser):
 
     email = models.EmailField(unique=True)
@@ -35,20 +38,29 @@ class Position(models.Model):
     def __str__(self):
         return self.name
     
+
+    
 class Employee(models.Model):
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50, blank= True)
-    gender = models.CharField(max_length=10)
-    employee_id = models.CharField(max_length=50, blank= True)
-    inactive_employee = models.CharField(max_length=50, blank= True)
-    start_date = models.DateField(default=datetime.now, blank=True)
-    location = models.CharField(max_length=50, blank= True)
-    position = models.ForeignKey("Position", on_delete=models.SET_NULL, null = True)
-    department = models.CharField(max_length=50, blank= True)
-    report_to = models.CharField(max_length=50, blank= True)
-    mobile_number = models.CharField(max_length=50, blank= True)
-    
-    
-    
+    eid = models.CharField(max_length=100, blank=True,)
+    title = models.CharField(max_length=100, blank=True, null=True)
+    first_name = models.CharField(max_length=100,blank=True, null=True)
+    last_name = models.CharField(max_length=100,blank=True, null=True)
+    position = models.ForeignKey("Position", on_delete=models.SET_NULL, null = True, blank=True)
+    notes = models.CharField(max_length=100, blank=True, null=True)
+    username =  models.CharField(max_length=100,blank=True, null=True)
+    status = models.BooleanField(default=True, null=True)
+    private = models.BooleanField(default=False, null=True)
+    timezone = models.CharField(max_length=100, blank=True, null=True)
+    timezone_offset = models.CharField(max_length=100, blank=True, null=True)
+    phone_number = models.CharField(max_length=50, blank= True, null=True)
+
     def __str__(self) -> str:
         return '{0} {1}'.format( self.first_name, self.last_name)
+    
+
+class EmployeeAPISetting(models.Model):
+    key  = models.CharField(max_length=100)
+    value = models.CharField(max_length=100)
+    api = models.BooleanField(default=True)
+    parameter = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)

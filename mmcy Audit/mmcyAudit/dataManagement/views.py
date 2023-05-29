@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 from django.shortcuts import render
-from .models import Client,Project
+from .models import Client,Project,ClientAPISetting, ProjectAPISetting
 import requests
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -13,6 +13,12 @@ from django.views.generic import ListView, CreateView, DetailView, UpdateView, D
 from django.db.models import Count
 import json
 import random
+from django.http import HttpResponse
+from django.views.decorators.http import require_http_methods
+from django.contrib import messages
+from requests import get
+from django.db.models import Q
+
 
 @login_required
 def index(request):
@@ -79,18 +85,18 @@ class ClientListView(ListView):
 class ClientCreateView(CreateView):
     model = Client
     template_name = 'client_create.html'
-    fields = ('name', 'status', 'mmcy_contact', 'onenote_link','resource_model','additional_description')
+    fields = ('name', 'id_cvent', 'datecreated', 'email', 'website', 'phone', 'fax', 'address', 'active', 'localidunpadded', 'localid')
     success_url = reverse_lazy('client_list_url')    
     
 class ClientDetailView(DetailView):
     model = Client
-    fields = ('name', 'type', 'active_project', 'hour_billable','hour_unbillable','additional_description')
+    fields = ('name', 'id_cvent', 'datecreated', 'email', 'website', 'phone', 'fax', 'address', 'active', 'localidunpadded', 'localid')
     template_name = 'client_view.html'
 
 
 class ClientUpdateView(UpdateView):
     model = Client
-    fields = ('name', 'status', 'mmcy_contact', 'onenote_link','resource_model','additional_description')
+    fields = ('name', 'id_cvent', 'datecreated', 'email', 'website', 'phone', 'fax', 'address', 'active', 'localidunpadded', 'localid')
     template_name = 'client_detail.html'
     success_url = reverse_lazy('client_list_url') 
     
@@ -109,14 +115,14 @@ class ProjectListView(ListView):
 class ProjectCreateView(CreateView):
     model = Project
     template_name = 'project_create.html'
-    fields = ('project_title', 'members', 'client', 'estimation','total_hour','start_date','launch_date','first_draft_date','status')
+    fields = ('project_title', 'members', 'client', 'description', 'date_start', 'date_end', 'alert_date', 'status', 'billable', 'budget', 'manager')
     success_url = reverse_lazy('project_list_url')    
 
 class ProjectUpdateView(UpdateView):
     model = Project
-    fields = ('project_title', 'members', 'client', 'estimation','total_hour','start_date','launch_date','first_draft_date','status')
+    fields = ('project_title', 'members', 'client', 'description', 'date_start', 'date_end', 'alert_date', 'status', 'billable', 'budget', 'manager')
     template_name = 'project_detail.html'
-    success_url = reverse_lazy('project_list_url') 
+    success_url = reverse_lazy('project_list_url')
 
 class ProjectDeleteView(DeleteView):
     model = Project
@@ -127,3 +133,159 @@ class ProjectDetailView(DetailView):
     model = Project
     fields = ('project_title', 'members', 'client', 'estimation','total_hour','start_date','launch_date','first_draft_date','status')
     template_name = 'project_view.html'
+    
+    
+
+@require_http_methods(['GET'])
+def get_clients(request):
+    api_set  = ClientAPISetting.objects.filter(active=True)
+    url_link = api_set.get(key = 'url')
+    token  = api_set.get(key = 'key')
+    url = url_link.value
+
+    headers = {'Accept': 'application/json'}
+    auth = (token.value, 'B')
+    params = {
+    single.key: single.value for single in api_set.filter(parameter=True)
+    }
+    try:
+        response = get(url, headers=headers, auth=auth, params=params)
+        response.raise_for_status()  # Raise exception for non-2xx status codes
+        clients = response.json().get('client', [])
+
+        # Get existing client IDs from the database
+        existing_client_ids = list(Client.objects.filter(id_cvent__in=[client['id'] for client in clients]).values_list('id_cvent', flat=True))
+
+        # Create new clients if they don't already exist
+        new_clients = [
+            {
+                'id_cvent': client['id'],
+                'name': client['name'],
+                'datecreated': client['datecreated'],
+                'email': client['email'],
+                'website': client['website'],
+                'phone': client['phone'],
+                'fax': client['fax'],
+                'address': client['address'],
+                'active': client['active'],
+                'localidunpadded': client['localidunpadded'],
+                'localid': client['localid'],
+            }
+            for client in clients
+            if client['id'] not in existing_client_ids
+        ]
+
+        # Bulk create new clients
+        Client.objects.bulk_create([Client(**client_data) for client_data in new_clients])
+
+        messages.success(request, "Client Sync Successfully.")
+        return redirect('client_list_url')
+    except requests.exceptions.RequestException as e:
+        return HttpResponse(f'Error occurred: {str(e)}')
+
+
+
+
+@require_http_methods(['GET'])
+def get_projects(request):
+    api_set  = ProjectAPISetting.objects.filter(active=True)
+    url_link = api_set.get(key = 'url')
+    token  = api_set.get(key = 'key')
+    url = url_link.value
+
+    headers = {'Accept': 'application/json'}
+    auth = (token.value, 'B')
+    params = {
+    single.key: single.value for single in api_set.filter(parameter=True)
+    }
+    try:
+        response = get(url, headers=headers, auth=auth, params=params)
+        response.raise_for_status()  # Raise exception for non-2xx status codes
+        projects = response.json().get('project', [])
+
+        # Get existing client IDs from the database
+        existing_client_ids = list(Project.objects.filter(pid__in=[project['id'] for project in projects]).values_list('pid', flat=True))
+
+        # Create new clients if they don't already exist
+        new_projects = [
+            {
+            'pid': project['id'],
+            'project_title': project['name'],
+            'description': project['description'],
+            'date_start': project['datestart'],
+            'date_end': project['dateend'],
+            'alert_date': project['alert_date'],
+            'status': project['active'],
+            'billable': project['billable'],
+            'budget': project['budget'],
+            'client': get_client_or_none(project['clientid']),
+            'manager':project['manager'],
+            
+            }
+            for project in projects
+            if project['id'] not in existing_client_ids
+        ]
+
+        # Bulk create new clients
+        Project.objects.bulk_create([Project(**project_data) for project_data in new_projects])
+
+        messages.success(request, "Project Sync Successfully.")
+        return redirect('project_list_url')
+    except requests.exceptions.RequestException as e:
+        return HttpResponse(f'Error occurred: {str(e)}')
+    
+@require_http_methods(['GET'])
+def get_projects_team(request, project_id):
+    api_set  = ProjectAPISetting.objects.all()
+    url_link = 'https://api.myintervals.com/projectteam'
+    token  = api_set.get(key = 'key')
+    url = url_link
+
+    headers = {'Accept': 'application/json'}
+    auth = (token.value, 'B')
+    params = {
+    'projectid':project_id
+    }
+    try:
+        response = get(url, headers=headers, auth=auth, params=params)
+        response.raise_for_status()  # Raise exception for non-2xx status codes
+        json_data = response.json()
+        members_id = json_data['projectteam']['personid']
+        # Retrieve the instance you want to update
+        project = Project.objects.get(pid=project_id)
+
+        # Get the list of employee IDs to be added
+        new_employee_ids = members_id  #  list of project IDs
+
+        # Filter out the employee IDs that already exist in the member's relation
+        existing_employee_ids = project.members.values_list('eid', flat=True)
+        new_employee_ids = list(filter(lambda eid: eid not in existing_employee_ids, new_employee_ids))
+
+        # Fetch the projects with the remaining IDs
+        new_projects = Employee.objects.filter(eid__in=new_employee_ids)
+
+        # Add the new employee to the project's relation
+        project.members.add(*new_projects)
+
+        # Save the project instance to persist the changes
+        project.save()
+        messages.success(request, "Project Team Members Sync Successfully.")
+        
+
+        return redirect('project_detail_url', int(project.id) )
+    except requests.exceptions.RequestException as e:
+        return HttpResponse(f'Error occurred: {str(e)}')
+    
+    
+    
+def get_project_list():
+    pass
+    
+def get_client_or_none(client_id):
+    try:
+        return Client.objects.get(id_cvent=client_id)
+    except Client.DoesNotExist:
+        return None
+
+
+
